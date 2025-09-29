@@ -1,0 +1,24 @@
+name: Create Usage Badge
+
+on:
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  count:
+    runs-on: ubuntu-latest
+      
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Generate user count JSON endpoint
+      uses: cicirello/count-action-users@v1
+      with:
+        action-list: thedannicraft/activity-log
+        target-directory: badge
+      env:
+        GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
